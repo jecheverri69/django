@@ -2,6 +2,9 @@
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.urls import reverse
+from django.forms.models import model_to_dict
+
+
 
 from adsi.models import Aprendiz, Fichas
 
@@ -113,6 +116,8 @@ def verAprendiz(request, id):
 def verAprendizJSON(request, id):
     try:
         q = Aprendiz.objects.get(pk=id)
-        return JsonResponse(q , safe=False)
+        diccionario = model_to_dict(q)
+       
+        return JsonResponse(diccionario)
     except Exception as e:
         return HttpResponse(e)        
