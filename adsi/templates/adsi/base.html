@@ -1,0 +1,66 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>ADSI - {% block titulo %}Inicio{% endblock %}</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="{% static 'adsi/css/bootstrap.min.css' %}">
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <img src="{% static 'adsi/img/django-logo.gif' %}" width="60px">    
+    <a class="navbar-brand" href="#"></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="{% url 'adsi:inicio' %}">Inicio <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Instructores</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Aprendices
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        
+                        {% if request.session.logueado.3 == "2" or request.session.logueado.3 == "4"  %}
+                            <a class="dropdown-item" href="{% url 'adsi:crearAprendiz' %}">Crear</a>
+                        {% endif %}
+                        
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="{% url 'adsi:listarAprendices' %}">Listar Aprendices</a>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+                </li>
+            </ul>
+            <form class="form-inline" action="{% url 'adsi:login' %}" method="POST">
+                {% csrf_token %}
+                Usuario: <input name="usuario" class="form-control col-2 mr-sm-2" type="text">
+                Clave: <input name="clave" class="form-control col-2 mr-sm-2" type="password">
+                <button class="btn btn-success" type="submit">Login</button>
+            </form>
+        </div>
+    </nav>
+    <section>
+        {% block contenedor %}{% endblock %}
+    </section>
+
+    <script src="{% static 'adsi/js/jquery-3.4.1.min.js' %}"></script>
+    <script src="{% static 'adsi/js/popper.min.js' %}"></script>
+    <script src="{% static 'adsi/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'adsi/js/libreria.js' %}"></script>
+</body>
+
+</html>
